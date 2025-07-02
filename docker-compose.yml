@@ -94,8 +94,27 @@ services:
     networks:
       - microservices_network
 
+  mysql:
+    container_name: mysql
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+    ports:
+      - '3307:3306'
+    healthcheck:
+      test: mysqladmin ping -u root --password=$MYSQL_ROOT_PASSWORD
+      timeout: 60s
+      retries: 10
+    volumes:
+      - microservices_mysql:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - microservices_network
+
 volumes:
   microservices_db:
   microservices_cache:
   grafana_data:
   prometheus_data:
+  microservices_mysql:
