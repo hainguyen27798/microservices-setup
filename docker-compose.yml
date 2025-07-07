@@ -177,6 +177,18 @@ services:
       timeout: 10s
       retries: 10
 
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:4-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: root
+    networks:
+      - microservices_network
+
 volumes:
   microservices_db:
   microservices_cache:
