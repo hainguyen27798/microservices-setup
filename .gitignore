@@ -3,3 +3,4 @@
 .env
 logs
 elastic-start-local
+email-templates

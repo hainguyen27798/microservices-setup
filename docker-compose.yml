@@ -45,15 +45,21 @@ services:
       - microservices_cache:/data
 
   mailer:
-    image: harrynguyen27798/mail-service:1.0.2
+    image: go-notification-service:1.0.1
     container_name: mailer
     ports:
       - '50051:50051'
     environment:
-      AWS_REGION: $AWS_REGION
-      AWS_SES_SENDER_EMAIL: $AWS_SES_SENDER_EMAIL
-      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      SMTP_HOST: $SMTP_HOST
+      SMTP_PORT: $SMTP_PORT
+      SMTP_USERNAME: $SMTP_USERNAME
+      SMTP_PASSWORD: $SMTP_PASSWORD
+      SMTP_EMAIL_SENDER: $SMTP_EMAIL_SENDER
+      RABBITMQ_ENABLE: $RABBITMQ_ENABLE
+      RABBITMQ_URL: $RABBITMQ_URL
+      RABBITMQ_SMTP_QUEUE_NAME: $RABBITMQ_SMTP_QUEUE_NAME
+    volumes:
+      - ./email-templates:/templates
     networks:
       - microservices_network
 
